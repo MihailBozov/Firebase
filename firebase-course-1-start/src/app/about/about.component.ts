@@ -16,6 +16,13 @@ export class AboutComponent {
 
     constructor(private db: AngularFirestore) {
     }
+    
+    onReadDoc() {
+        this.db.doc('/courses/61ASoZMONtRZLipBdaHD').get().subscribe(snap => {
+            console.log(snap.id);
+            console.log(snap.data())
+        });
+    }
 
     async uploadData() {
         const coursesCollection = this.db.collection('courses');
