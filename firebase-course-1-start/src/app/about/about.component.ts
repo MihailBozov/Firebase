@@ -32,6 +32,14 @@ export class AboutComponent {
                 console.log(snap.payload.data())
             })
     }
+    
+    onReadDocValueChanges() {
+        this.db.doc('/courses/61ASoZMONtRZLipBdaHD')
+        .valueChanges()
+        .subscribe(snap => {
+            console.log(snap)
+        })
+    }
 
     onReadCollection() {
         this.db
