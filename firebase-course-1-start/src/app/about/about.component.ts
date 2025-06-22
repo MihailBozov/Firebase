@@ -24,6 +24,15 @@ export class AboutComponent {
         });
     }
 
+    onReadDocChanges() {
+        this.db.doc('courses/61ASoZMONtRZLipBdaHD')
+            .snapshotChanges()
+            .subscribe(snap => {
+                console.log(snap.payload.id);
+                console.log(snap.payload.data())
+            })
+    }
+
     onReadCollection() {
         this.db
             .collection('/courses/61ASoZMONtRZLipBdaHD/lessons', ref => ref.where('seqNo', '<=', 10).orderBy('seqNo'))
@@ -50,16 +59,16 @@ export class AboutComponent {
                 })
             })
     }
-    
-    onReadCollectionGroup(){
+
+    onReadCollectionGroup() {
         this.db.collectionGroup('lessons', ref => ref.where('seqNo', '==', 1))
-        .get()
-        .subscribe(snaps => {
-            snaps.forEach(snap => {
-                console.log(snap.id)
-                console.log(snap.data())
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id)
+                    console.log(snap.data())
+                })
             })
-        })
     }
 
     async uploadData() {
