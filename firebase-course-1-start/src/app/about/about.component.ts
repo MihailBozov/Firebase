@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 import 'firebase/firestore';
 
-import {AngularFirestore} from '@angular/fire/firestore';
-import {COURSES, findLessonsForCourse} from './db-data';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { COURSES, findLessonsForCourse } from './db-data';
 
 
 @Component({
@@ -16,12 +16,24 @@ export class AboutComponent {
 
     constructor(private db: AngularFirestore) {
     }
-    
+
     onReadDoc() {
         this.db.doc('/courses/61ASoZMONtRZLipBdaHD').get().subscribe(snap => {
             console.log(snap.id);
             console.log(snap.data())
         });
+    }
+
+    onReadCollection() {
+        this.db
+            .collection('/courses/61ASoZMONtRZLipBdaHD/lessons', ref => ref.where('seqNo', '<=', 10).orderBy('seqNo'))
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id)
+                    console.log(snap.data())
+                })
+            })
     }
 
     async uploadData() {
@@ -42,7 +54,7 @@ export class AboutComponent {
     }
 
     removeId(data: any) {
-        const newData: any = {...data};
+        const newData: any = { ...data };
         delete newData.id;
         return newData;
     }
