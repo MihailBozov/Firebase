@@ -36,6 +36,21 @@ export class AboutComponent {
             })
     }
 
+    onReadCollectionFilteredByMoreThanOneParameter() {
+        this.db
+            .collection('courses', ref => ref
+                .where('seqNo', '<=', 10)
+                .where('url', '==', "angular-forms-course")
+                .orderBy('seqNo'))
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id)
+                    console.log(snap.data())
+                })
+            })
+    }
+
     async uploadData() {
         const coursesCollection = this.db.collection('courses');
         const courses = await this.db.collection('courses').get();
