@@ -23,7 +23,7 @@ export class AboutComponent {
             .subscribe(snap => {
                 console.log(snap.id)
                 console.log(snap.data())
-                
+
             })
     }
 
@@ -37,8 +37,8 @@ export class AboutComponent {
                 })
             })
     }
-    
-        onReadCollectionFiltered() {
+
+    onReadCollectionFiltered() {
         this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons', ref => ref.where('seqNo', '==', 1))
             .get()
             .subscribe(snaps => {
@@ -48,9 +48,9 @@ export class AboutComponent {
                 })
             })
     }
-    
-            onReadCollectionFilteredWithOrder() {
-        this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons', ref => ref.where('seqNo', '<=' , 3).orderBy('seqNo'))
+
+    onReadCollectionFilteredWithOrder() {
+        this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons', ref => ref.where('seqNo', '<=', 3).orderBy('seqNo'))
             .get()
             .subscribe(snaps => {
                 snaps.forEach(snap => {
@@ -59,7 +59,20 @@ export class AboutComponent {
                 })
             })
     }
-    
+
+    onReadCollectionFilteredByMoreFields() {
+        this.db.collection('courses', ref => ref
+            .where('price', '<=', 50)
+            .where('url', '==', 'angular-forms-course'))
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id);
+                    console.log(snap.data());
+                })
+            })
+    }
+
 
     async uploadData() {
         const coursesCollection = this.db.collection('courses');
