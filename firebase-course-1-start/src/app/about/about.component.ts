@@ -27,6 +27,16 @@ export class AboutComponent {
             })
     }
 
+    onReadDockChange() {
+        this.db.doc('/courses/owWPPZ0Ck2R5oiDpZcLW')
+            .snapshotChanges()
+            .subscribe(snap => {
+                console.log(snap.payload.id)
+                console.log(snap.payload.data())
+
+            })
+    }
+
     onReadCollection() {
         this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons')
             .get()
@@ -72,18 +82,18 @@ export class AboutComponent {
                 })
             })
     }
-    
-        onReadCollectionGroup() {
+
+    onReadCollectionGroup() {
         this.db.collectionGroup('lessons', ref => ref
             .where('seqNo', '<=', 20)
         )
-        .get()
-        .subscribe(snaps => {
-            snaps.forEach(snap => {
-                console.log(snap.id)
-                console.log(snap.data())
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id)
+                    console.log(snap.data())
+                })
             })
-        })
     }
 
 
