@@ -72,6 +72,19 @@ export class AboutComponent {
                 })
             })
     }
+    
+        onReadCollectionGroup() {
+        this.db.collectionGroup('lessons', ref => ref
+            .where('seqNo', '<=', 20)
+        )
+        .get()
+        .subscribe(snaps => {
+            snaps.forEach(snap => {
+                console.log(snap.id)
+                console.log(snap.data())
+            })
+        })
+    }
 
 
     async uploadData() {
