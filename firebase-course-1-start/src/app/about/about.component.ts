@@ -23,6 +23,18 @@ export class AboutComponent {
             .subscribe(snap => {
                 console.log(snap.id)
                 console.log(snap.data())
+                
+            })
+    }
+
+    onReadCollection() {
+        this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons')
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id);
+                    console.log(snap.data());
+                })
             })
     }
 
