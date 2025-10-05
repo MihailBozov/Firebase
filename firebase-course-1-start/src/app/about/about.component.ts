@@ -49,6 +49,17 @@ export class AboutComponent {
             })
     }
     
+            onReadCollectionFilteredWithOrder() {
+        this.db.collection('/courses/6wilHO1zONo7YUoQpFoV/lessons', ref => ref.where('seqNo', '<=' , 3).orderBy('seqNo'))
+            .get()
+            .subscribe(snaps => {
+                snaps.forEach(snap => {
+                    console.log(snap.id);
+                    console.log(snap.data());
+                })
+            })
+    }
+    
 
     async uploadData() {
         const coursesCollection = this.db.collection('courses');
