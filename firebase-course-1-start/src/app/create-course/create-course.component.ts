@@ -15,13 +15,26 @@ import Timestamp = firebase.firestore.Timestamp;
   styleUrls: ['create-course.component.css']
 })
 export class CreateCourseComponent implements OnInit {
+  
+  constructor(private fb: FormBuilder) {}
 
-  constructor() {
-
-  }
-
-  ngOnInit() {
-
+  form = this.fb.group({
+      description: ['', Validators.required],
+      category: ["BEGINNER", Validators.required],
+      url: ['', Validators.required],
+      longDescription: ['', Validators.required],
+      promo: [false],
+      promoStartAt: [null]
+    });;
+  
+  
+  ngOnInit() { }
+  
+  onCreateCourse() {
+    const newCourse = {...this.form.value} as Course
+    newCourse.promoStartAt= Timestamp.fromDate(this.form.value.promoStartAt);
+    
+    console.log(newCourse);
   }
 
 }
