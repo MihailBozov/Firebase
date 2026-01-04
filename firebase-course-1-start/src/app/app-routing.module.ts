@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'create-course',
     component: CreateCourseComponent,
-    //canActivate: [AngularFireAuthGuard],
+    canActivate: [AngularFireAuthGuard],
     data: {
       authGuardPipe: adminOnly
     }
