@@ -18,6 +18,9 @@ import { CoursesService } from '../services/courses.service';
 export class CreateCourseComponent implements OnInit {
 
   courseId: string;
+  iconUrl: string;
+  percentageChanges$: Observable<number>;
+  
 
   form = this.fb.group({
     description: ['', Validators.required],
@@ -70,8 +73,20 @@ export class CreateCourseComponent implements OnInit {
     const filePath = `courses/${this.courseId}/${file.name}`;
     
     const task = this.storage.upload(filePath, file, { cacheControl: "max-age=2592000,public"});
+    this.percentageChanges$ = task.percentageChanges();
     
-    task.snapshotChanges().subscribe();
+    task.snapshotChanges()
+    .pipe(
+      last(),
+      concatMap(() => this.storage.ref(filePath).getDownloadURL()),
+      tap(url => this.iconUrl = url),
+      catchError(err => {
+        console.log(err);
+        alert("Could not create thumbnail url!");
+        return throwError(err)
+      })
+    )
+    .subscribe();
   }
 
 }
