@@ -14,7 +14,7 @@ export const environment = {
     appId: "1:71531633627:web:a3d7df79ade83b54b025fe"
   },
   api: {
-
+    createUser: "http://127.0.0.1:5001/fir-project-5d64e/us-central1/createUser",
   }
 };
 
