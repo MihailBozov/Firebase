@@ -7,5 +7,13 @@ export const onAddCourseUpdatePromoCounter =
   })
     .firestore.document("courses/{courseId}")
     .onCreate(async (snap, context) => {
-      await (await import("./promotions-counter/on-add-course")).default(snap, context)}
+      await (await import("./promotions-counter/on-add-course")).default(snap, context)
+    }
     );
+
+export const onCourseUpdatedUpdatePromoCounter =
+  functions.firestore
+    .document('courses/{courseId}')
+    .onUpdate(async (change, context) => {
+      await (await import('./promotions-counter/on-course-updated')).default(change, context);
+    })
