@@ -1,6 +1,8 @@
-import functions from 'firebase-functions';
-
 const express = require('express');
+
+import * as functions from 'firebase-functions';
+import { auth, db } from './init';
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 export const createUserApp = express();
@@ -15,6 +17,15 @@ createUserApp.post('/', async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
         const admin = req.body.admin;
+        
+        
+        const user = await auth.createUser({
+            email,
+            password
+        });
+        
+        await auth.setCustomUserClaims(user.uid, {admin});
+        db.doc(`users/${user.uid}`).set({});
         
         res.status(200).json({message: 'User created successfully'})
         
